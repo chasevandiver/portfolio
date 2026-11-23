@@ -168,3 +168,8 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
 .rail button:hover::after { background: var(--ink); }
 .rail button.active::after { width: 30px; background: var(--accent); }
 .rail button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+/* Highlights under a project's blurb */
+.highlights { list-style: none; display: grid; gap: 0.55rem; padding-top: 0.9rem; border-top: 1px solid rgba(255,255,255,.14); width: 100%; }
+.highlights li { position: relative; padding-left: 1.1rem; color: var(--mute); font-size: 0.95rem; line-height: 1.4; }
+.highlights li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 6px; height: 1.5px; background: var(--accent); }

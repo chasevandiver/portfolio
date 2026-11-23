@@ -49,6 +49,13 @@ function ProjectSection({ project, cover }: { project: Project; cover: boolean }
         <div className="glass card l">
           <span className="cat">{project.category}</span>
           <p className="blurb">{project.blurb}</p>
+          {project.highlights.length > 0 && (
+            <ul className="highlights">
+              {project.highlights.map((h) => (
+                <li key={h}>{h}</li>
+              ))}
+            </ul>
+          )}
         </div>
         <div className="glass card r">
           {project.stack.length > 0 && (

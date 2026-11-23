@@ -6,6 +6,8 @@ export type Project = {
   blurb: string;
   category: string;
   stack: string[];
+  /** Up to three short specifics shown under the blurb. */
+  highlights: string[];
   url: string;
   video: string;
   poster: string;

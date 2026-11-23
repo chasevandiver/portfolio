@@ -10,7 +10,8 @@
     "poster": "/posters/the-cfb-slate.jpg",
     "accent": "#FF6A2B",
     "featured": true,
-    "viewport": "mobile"
+    "viewport": "mobile",
+    "highlights": []
   },
   {
     "slug": "fairway-picks",
@@ -26,7 +27,8 @@
     "poster": "/posters/fairway-picks.jpg",
     "accent": "#2FD18A",
     "featured": true,
-    "viewport": "desktop"
+    "viewport": "desktop",
+    "highlights": []
   },
   {
     "slug": "courtside-edge",
@@ -42,7 +44,8 @@
     "poster": "/posters/courtside-edge.jpg",
     "accent": "#F5B83D",
     "featured": true,
-    "viewport": "desktop"
+    "viewport": "desktop",
+    "highlights": []
   },
   {
     "slug": "jarvis",
@@ -55,7 +58,8 @@
     "poster": "/posters/jarvis.jpg",
     "accent": "#4CC9F0",
     "featured": true,
-    "viewport": "desktop"
+    "viewport": "desktop",
+    "highlights": []
   },
   {
     "slug": "chase-city",
@@ -68,7 +72,8 @@
     "poster": "/posters/chase-city.jpg",
     "accent": "#B28DFF",
     "featured": true,
-    "viewport": "desktop"
+    "viewport": "desktop",
+    "highlights": []
   },
   {
     "slug": "tv-overlay",
@@ -81,7 +86,8 @@
     "poster": "",
     "accent": "#FF3D71",
     "featured": true,
-    "viewport": "desktop"
+    "viewport": "desktop",
+    "highlights": []
   },
   {
     "slug": "floorory",
@@ -94,7 +100,8 @@
     "poster": "/posters/floorory.jpg",
     "accent": "#FFD84D",
     "featured": true,
-    "viewport": "desktop"
+    "viewport": "desktop",
+    "highlights": []
   },
   {
     "slug": "orion",
@@ -107,7 +114,8 @@
     "poster": "/posters/orion.jpg",
     "accent": "#5B7CFF",
     "featured": true,
-    "viewport": "desktop"
+    "viewport": "desktop",
+    "highlights": []
   },
   {
     "slug": "christies-golf-ranch",
@@ -120,7 +128,8 @@
     "poster": "",
     "accent": "",
     "featured": false,
-    "viewport": "desktop"
+    "viewport": "desktop",
+    "highlights": []
   },
   {
     "slug": "chase-os",
@@ -133,7 +142,8 @@
     "poster": "",
     "accent": "",
     "featured": false,
-    "viewport": "desktop"
+    "viewport": "desktop",
+    "highlights": []
   },
   {
     "slug": "golf-oracle",
@@ -146,7 +156,8 @@
     "poster": "",
     "accent": "",
     "featured": false,
-    "viewport": "desktop"
+    "viewport": "desktop",
+    "highlights": []
   },
   {
     "slug": "fantasybaseballkeepers",
@@ -159,7 +170,8 @@
     "poster": "",
     "accent": "",
     "featured": false,
-    "viewport": "desktop"
+    "viewport": "desktop",
+    "highlights": []
   },
   {
     "slug": "fantraxapi",
@@ -172,7 +184,8 @@
     "poster": "",
     "accent": "",
     "featured": false,
-    "viewport": "desktop"
+    "viewport": "desktop",
+    "highlights": []
   },
   {
     "slug": "kitchen-homebase",
@@ -185,7 +198,8 @@
     "poster": "",
     "accent": "",
     "featured": false,
-    "viewport": "desktop"
+    "viewport": "desktop",
+    "highlights": []
   },
   {
     "slug": "kidbook-creator",
@@ -198,7 +212,8 @@
     "poster": "",
     "accent": "",
     "featured": false,
-    "viewport": "desktop"
+    "viewport": "desktop",
+    "highlights": []
   },
   {
     "slug": "wilderwhim-woods",
@@ -211,7 +226,8 @@
     "poster": "",
     "accent": "",
     "featured": false,
-    "viewport": "desktop"
+    "viewport": "desktop",
+    "highlights": []
   },
   {
     "slug": "website-redesign-business",
@@ -224,6 +240,7 @@
     "poster": "",
     "accent": "",
     "featured": false,
-    "viewport": "desktop"
+    "viewport": "desktop",
+    "highlights": []
   }
 ]
