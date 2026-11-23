@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Direction A: Launch | Chase Vandiver</title>
+<style>
+@font-face { font-family: "Archivo"; src: url("vendor/fonts/archivo-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Hanken Grotesk"; src: url("vendor/fonts/hanken-grotesk-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+
+:root {
+  --bg: #060914;
+  --ink: #f5f7fb;
+  --mute: #8d97ab;
+  --pad: 4vw;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Hanken Grotesk", system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: inherit; }
+a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+.display {
+  font-family: "Archivo", system-ui, sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.045em;
+  line-height: 0.84;
+}
+.ln { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+.w { display: inline-block; will-change: transform; }
+
+/* Hero */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  padding: var(--pad);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--bg);
+}
+.hero nav { display: flex; justify-content: space-between; font-weight: 500; }
+.hero nav a { text-decoration: none; margin-left: 2em; }
+.hero nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.hero h1 { font-size: 17.6vw; margin-left: -0.04em; }
+.hero-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2rem;
+  margin-top: 3vh;
+}
+.hero-foot p { max-width: 34ch; font-size: clamp(1.05rem, 1.55vw, 1.6rem); line-height: 1.3; }
+.cue { display: flex; align-items: center; gap: 0.8em; color: var(--mute); white-space: nowrap; }
+.cue i { display: block; width: 1px; height: 56px; background: var(--mute); transform-origin: top; animation: cue 1.8s cubic-bezier(.7,0,.2,1) infinite; }
+@keyframes loop { to { background-position: 200px 0, 0 0; } }
+@keyframes cue { 0% { transform: scaleY(0); } 55% { transform: scaleY(1); transform-origin: top; } 56% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+
+/* Project section */
+.project {
+  position: relative;
+  z-index: 1;
+  background: var(--bg);
+  padding: 18vw var(--pad) 14vw;
+  display: flex;
+  flex-direction: column;
+  gap: 8vw;
+}
+.panel { display: none; position: absolute; inset: 0; background: var(--accent); z-index: 1; will-change: clip-path; }
+.rule { height: 6px; background: var(--accent); transform-origin: left; order: 0; }
+.name { font-size: 21vw; order: 1; }
+.meta { order: 2; display: flex; flex-direction: column; gap: 1.1rem; align-items: flex-start; }
+.meta .cat { color: var(--accent); font-weight: 600; }
+.meta .blurb { font-size: clamp(1.15rem, 1.6vw, 1.7rem); line-height: 1.28; max-width: 30ch; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; }
+.tags li { border: 1px solid rgba(245,247,251,.28); border-radius: 999px; padding: 0.3em 0.9em; font-size: 0.9rem; }
+.tags li.tbd { border-style: dashed; color: var(--mute); }
+.live { display: inline-block; background: var(--ink); color: var(--bg); text-decoration: none; font-weight: 700; padding: 0.85em 1.4em; border-radius: 999px; }
+.live:hover { background: var(--accent); }
+.soon { color: var(--mute); }
+.frame { order: 3; position: relative; overflow: hidden; background: var(--accent); align-self: center; }
+.frame.mobile { width: 68vw; aspect-ratio: 9 / 19.5; border-radius: 9vw; }
+.frame.desktop { width: 100%; aspect-ratio: 16 / 10; border-radius: 10px; }
+.screen {
+  position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(115deg, transparent 0 46px, rgba(255,255,255,.045) 46px 92px),
+    linear-gradient(160deg, color-mix(in srgb, var(--accent) 62%, #0b0f1c), color-mix(in srgb, var(--accent) 20%, #0b0f1c));
+  background-size: 200px 100%, auto;
+  animation: loop 6s linear infinite;
+  display: grid; place-content: center; justify-items: center; gap: 0.9rem;
+  text-align: center; padding: 1.5rem; color: var(--ink);
+}
+.screen video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.play { width: 64px; height: 64px; border-radius: 50%; border: 1.5px solid var(--ink); display: grid; place-content: center; }
+.play::after { content: ""; border-left: 16px solid var(--ink); border-top: 10px solid transparent; border-bottom: 10px solid transparent; margin-left: 5px; }
+.screen small { color: rgba(245,247,251,.7); font-size: 0.85rem; }
+
+.end { position: relative; z-index: 1; background: var(--bg); min-height: 60svh; display: grid; place-content: center; color: var(--mute); padding: var(--pad); text-align: center; }
+
+/* Pinned desktop layout. html.pinned is set by JS only when motion is allowed. */
+@media (min-width: 768px) {
+  .project { height: 100vh; padding: 0; display: block; overflow: hidden; }
+  .rule { display: none; }
+  .name { position: absolute; left: var(--pad); bottom: 4.5vh; z-index: 4; font-size: 16.5vw; pointer-events: none; margin-left: -0.04em; }
+  .meta { position: absolute; left: var(--pad); top: 13vh; width: 27vw; z-index: 4; }
+  .frame { position: absolute; z-index: 2; }
+  .frame.mobile { width: auto; height: 78vh; top: 11vh; right: 19vw; border-radius: 3.4vh; }
+  .frame.desktop { width: 53vw; top: 13vh; right: var(--pad); }
+  html.pinned .panel { display: block; }
+  html.pinned .project.cover { margin-top: -100vh; z-index: 2; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cue i, .screen { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <nav>
+    <span>Direction A: Launch</span>
+    <span><a href="#work">Work</a><a href="#contact">Contact</a></span>
+  </nav>
+  <div>
+    <h1 class="display">
+      <span class="ln"><span class="w">Chase</span></span>
+      <span class="ln"><span class="w">Vandiver</span></span>
+    </h1>
+    <div class="hero-foot">
+      <p>I build and ship software: apps, betting models and AI systems that my friends and family use every week.</p>
+      <span class="cue">Scroll <i></i></span>
+    </div>
+  </div>
+</header>
+
+<main id="work">
+  <section class="project" style="--accent:#FF6A2B">
+    <div class="panel"></div>
+    <div class="rule"></div>
+    <div class="meta">
+      <span class="cat mi">Sports, mobile app</span>
+      <p class="blurb mi">Invite-only college football ratings, pick'em, and bet tracking for my friend group.</p>
+      <ul class="tags mi"><li class="tbd">Stack to be added</li></ul>
+      <a class="live mi" href="https://cfb-gameday.vercel.app">Open cfb-gameday.vercel.app</a>
+    </div>
+    <div class="frame mobile">
+      <div class="screen">
+        <video muted loop playsinline preload="none" hidden></video>
+        <span class="play"></span>
+        <span>Video placeholder</span>
+        <small>Phone clip, muted loop</small>
+      </div>
+    </div>
+    <h2 class="name display">
+      <span class="ln"><span class="w">The CFB</span></span>
+      <span class="ln"><span class="w">Slate</span></span>
+    </h2>
+  </section>
+
+  <section class="project cover" style="--accent:#2FD18A">
+    <div class="panel"></div>
+    <div class="rule"></div>
+    <div class="meta">
+      <span class="cat mi">Sports, web app</span>
+      <p class="blurb mi">Fantasy golf pick'em app.</p>
+      <ul class="tags mi"><li>Next.js</li><li>Supabase</li></ul>
+      <span class="soon mi">Live link coming soon</span>
+    </div>
+    <div class="frame desktop">
+      <div class="screen">
+        <video muted loop playsinline preload="none" hidden></video>
+        <span class="play"></span>
+        <span>Video placeholder</span>
+        <small>Desktop clip, muted loop</small>
+      </div>
+    </div>
+    <h2 class="name display">
+      <span class="ln"><span class="w">Fairway</span></span>
+      <span class="ln"><span class="w">Picks</span></span>
+    </h2>
+  </section>
+</main>
+
+<footer class="end" id="contact">
+  <p>End of mockup. Six more featured sections, the grid and contact follow in the real build.</p>
+</footer>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+function startLenis() {
+  const lenis = new Lenis();
+  window.lenis = lenis;
+  lenis.on("scroll", ScrollTrigger.update);
+  const raf = (t) => lenis.raf(t * 1000);
+  gsap.ticker.add(raf);
+  gsap.ticker.lagSmoothing(0);
+  return () => { gsap.ticker.remove(raf); lenis.destroy(); window.lenis = null; };
+}
+
+document.fonts.ready.then(() => {
+  const mm = gsap.matchMedia();
+  mm.add({
+    desktop: "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+    mobile: "(max-width: 767.98px) and (prefers-reduced-motion: no-preference)",
+  }, (ctx) => {
+    const { desktop } = ctx.conditions;
+    const stopLenis = startLenis();
+
+    // One load sequence for the hero.
+    gsap.from(".hero .w", { yPercent: 110, duration: 1.1, stagger: 0.09, ease: "expo.out" });
+    gsap.from(".hero-foot > *", { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.08, delay: 0.45, ease: "power3.out" });
+
+    const sections = gsap.utils.toArray(".project");
+
+    if (desktop) {
+      document.documentElement.classList.add("pinned");
+
+      // Hero holds still so the first accent field rises over it.
+      ScrollTrigger.create({ trigger: ".hero", start: "top top", end: "bottom top", pin: true, pinSpacing: false });
+
+      sections.forEach((sec) => {
+        const panel = sec.querySelector(".panel");
+        const frame = sec.querySelector(".frame");
+        const toFrame = () => {
+          const t = frame.offsetTop, l = frame.offsetLeft;
+          const r = sec.offsetWidth - l - frame.offsetWidth;
+          const b = sec.offsetHeight - t - frame.offsetHeight;
+          const rad = parseFloat(getComputedStyle(frame).borderTopLeftRadius) || 0;
+          return `inset(${t}px ${r}px ${b}px ${l}px round ${rad}px)`;
+        };
+        gsap.timeline({
+          defaults: { ease: "none" },
+          scrollTrigger: { trigger: sec, start: "top top", end: "+=260%", pin: true, scrub: 0.5, invalidateOnRefresh: true },
+        })
+          // Accent field collapses to the exact rect of the device.
+          .fromTo(panel, { clipPath: "inset(0px 0px 0px 0px round 0px)" }, { clipPath: toFrame, duration: 2.6, ease: "expo.inOut" }, 0)
+          .from(sec.querySelectorAll(".name .w"), { yPercent: 112, duration: 1.4, stagger: 0.22, ease: "power4.out" }, 1.1)
+          // Video wipes in over the accent rect.
+          .fromTo(frame, { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.5, ease: "power4.inOut" }, 2.3)
+          .from(sec.querySelector(".screen"), { scale: 1.3, duration: 2, ease: "power3.out" }, 2.3)
+          .from(sec.querySelectorAll(".mi"), { y: 28, autoAlpha: 0, duration: 0.7, stagger: 0.12, ease: "power3.out" }, 3.2)
+          // Hold while the next accent field covers this one.
+          .to({}, { duration: 3.4 });
+      });
+    } else {
+      sections.forEach((sec) => {
+        gsap.timeline({ scrollTrigger: { trigger: sec, start: "top 72%", once: true } })
+          .from(sec.querySelector(".rule"), { scaleX: 0, duration: 0.7, ease: "expo.inOut" })
+          .from(sec.querySelectorAll(".name .w"), { yPercent: 112, duration: 0.8, stagger: 0.08, ease: "power4.out" }, 0.15)
+          .from(sec.querySelectorAll(".mi"), { y: 18, autoAlpha: 0, duration: 0.5, stagger: 0.07, ease: "power3.out" }, 0.4);
+        gsap.fromTo(sec.querySelector(".screen"), { clipPath: "inset(0% 100% 0% 0%)" }, {
+          clipPath: "inset(0% 0% 0% 0%)", duration: 0.9, ease: "power4.inOut",
+          scrollTrigger: { trigger: sec.querySelector(".frame"), start: "top 78%", once: true },
+        });
+      });
+    }
+
+    return () => { document.documentElement.classList.remove("pinned"); stopLenis(); };
+  });
+});
+</script>
+</body>
+</html>

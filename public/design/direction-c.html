@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Direction C: Depth | Chase Vandiver</title>
+<style>
+@font-face { font-family: "Outfit"; src: url("vendor/fonts/outfit-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+
+:root {
+  --bg: #090a0f;
+  --ink: #f3f4f8;
+  --mute: #9ea4b3;
+  --pad: 4vw;
+  --accent: #46507a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { overflow-x: clip; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Outfit", system-ui, sans-serif;
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: inherit; }
+a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+.display { font-weight: 600; letter-spacing: -0.04em; line-height: 0.92; }
+.w { display: inline-block; will-change: transform, opacity; }
+
+/* Ambient light: one fixed source whose colour follows the active project */
+.ambient {
+  position: fixed; z-index: 0; pointer-events: none;
+  width: 120vmax; height: 120vmax; left: 50%; top: 50%;
+  margin: -60vmax 0 0 -60vmax;
+  background-color: #46507a;
+  -webkit-mask-image: radial-gradient(closest-side, #000 0%, rgba(0,0,0,.45) 35%, transparent 72%);
+  mask-image: radial-gradient(closest-side, #000 0%, rgba(0,0,0,.45) 35%, transparent 72%);
+  opacity: 0.3;
+  transform: translate(28vw, -34vh);
+}
+
+.glass {
+  background: linear-gradient(145deg, rgba(255,255,255,.1), rgba(255,255,255,.035));
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  backdrop-filter: blur(22px) saturate(150%);
+  border: 1px solid rgba(255,255,255,.13);
+  border-top-color: rgba(255,255,255,.24);
+  border-radius: 20px;
+  box-shadow: 0 30px 60px -30px rgba(0,0,0,.7);
+}
+
+/* Hero */
+.hero { position: relative; z-index: 1; min-height: 100svh; padding: var(--pad); display: flex; flex-direction: column; justify-content: space-between; }
+.hero nav { display: flex; justify-content: space-between; font-weight: 400; }
+.hero nav a { text-decoration: none; margin-left: 2em; }
+.hero nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.hero h1 { font-size: 15vw; margin-left: -0.04em; }
+.hero h1 span.l { display: block; }
+.hero-foot { margin-top: 4vh; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.2rem 2rem; padding: 1.4rem 1.7rem; }
+.hero-foot p { max-width: 40ch; font-size: clamp(1.05rem, 1.45vw, 1.5rem); line-height: 1.3; }
+.cue { display: flex; align-items: center; gap: 0.7em; color: var(--mute); }
+.cue i { width: 22px; height: 36px; border: 1px solid var(--mute); border-radius: 11px; position: relative; }
+.cue i::after { content: ""; position: absolute; left: 50%; top: 7px; width: 3px; height: 7px; margin-left: -1.5px; border-radius: 2px; background: var(--ink); animation: cue 1.7s cubic-bezier(.6,0,.2,1) infinite; }
+@keyframes cue { 0% { transform: translateY(0); opacity: 1; } 70%, 100% { transform: translateY(13px); opacity: 0; } }
+
+/* Project (mobile-first, stacked) */
+.project { position: relative; z-index: 1; padding: 16vw var(--pad); display: flex; flex-direction: column; align-items: center; gap: 8vw; }
+.name { font-size: 16vw; text-align: center; }
+.stage { position: relative; display: grid; place-items: center; width: 100%; perspective: 1500px; }
+.halo {
+  position: absolute; left: 50%; top: 50%; width: 130vw; height: 130vw; margin: -65vw 0 0 -65vw; pointer-events: none;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 70%, transparent), color-mix(in srgb, var(--accent) 22%, transparent) 45%, transparent 72%);
+  opacity: 0.75;
+}
+.device {
+  position: relative; padding: 9px; border-radius: 44px;
+  background: linear-gradient(160deg, rgba(255,255,255,.2), rgba(255,255,255,.05));
+  border: 1px solid rgba(255,255,255,.2);
+  box-shadow: 0 50px 90px -30px rgba(0,0,0,.85);
+  transform-style: preserve-3d; will-change: transform;
+}
+.device.mobile { width: 62vw; }
+.device.mobile .screen { aspect-ratio: 9 / 19.5; border-radius: 36px; }
+.device.desktop { width: 100%; border-radius: 18px; padding: 7px; }
+.device.desktop .screen { aspect-ratio: 16 / 10; border-radius: 12px; }
+.screen {
+  position: relative; overflow: hidden;
+  background: radial-gradient(120% 90% at 30% 10%, color-mix(in srgb, var(--accent) 75%, #10121a), color-mix(in srgb, var(--accent) 16%, #10121a) 70%);
+  display: grid; place-content: center; justify-items: center; gap: 0.8rem; text-align: center; padding: 1rem;
+}
+.screen video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.play { width: 62px; height: 62px; border-radius: 50%; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.4); display: grid; place-content: center; }
+.play::after { content: ""; border-left: 15px solid var(--ink); border-top: 9px solid transparent; border-bottom: 9px solid transparent; margin-left: 4px; }
+.screen small { color: rgba(243,244,248,.75); font-size: 0.85rem; }
+.panels { display: grid; gap: 14px; width: 100%; }
+.glass.card { padding: 1.4rem 1.5rem; display: flex; flex-direction: column; gap: 0.9rem; align-items: flex-start; }
+.cat { color: var(--mute); font-size: 0.95rem; display: flex; align-items: center; gap: 0.6em; }
+.cat::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
+.blurb { font-size: clamp(1.1rem, 1.35vw, 1.45rem); line-height: 1.3; font-weight: 400; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; }
+.tags li { background: rgba(255,255,255,.09); border-radius: 999px; padding: 0.3em 0.95em; font-size: 0.92rem; font-weight: 400; }
+.tags li.tbd { background: none; border: 1px dashed rgba(255,255,255,.25); color: var(--mute); }
+.live { display: inline-block; text-decoration: none; font-weight: 500; padding: 0.75em 1.3em; border-radius: 999px; background: var(--accent); color: #0a0b10; }
+.live:hover { filter: brightness(1.12); }
+.soon { color: var(--mute); }
+
+.end { position: relative; z-index: 1; min-height: 60svh; display: grid; place-content: center; color: var(--mute); padding: var(--pad); text-align: center; }
+
+@media (min-width: 768px) {
+  .project { height: 100vh; padding: 0; display: block; }
+  .name { position: absolute; left: 0; right: 0; top: 7.5vh; font-size: 12.5vw; white-space: nowrap; z-index: 1; }
+  .stage { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+  .halo { width: 90vw; height: 90vw; margin: -45vw 0 0 -45vw; top: 58%; }
+  .device { margin-top: 15vh; pointer-events: auto; }
+  .device.mobile { width: auto; }
+  .device.mobile .screen { height: 70vh; aspect-ratio: 9 / 19.5; border-radius: 4.2vh; }
+  .device.mobile { border-radius: calc(4.2vh + 9px); }
+  .device.desktop { width: 54vw; margin-top: 18vh; }
+  .panels { display: block; position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+  .glass.card { position: absolute; pointer-events: auto; }
+  .card.l { left: 6vw; bottom: 11vh; width: 23vw; }
+  .card.r { right: 6vw; top: 47vh; width: 20vw; }
+  .mobile-vp .card.l { left: 15vw; }
+  .mobile-vp .card.r { right: 17vw; }
+  html.pinned .project.cover { margin-top: -100vh; }
+}
+@media (prefers-reduced-motion: reduce) { .cue i::after { animation: none; } }
+</style>
+</head>
+<body>
+
+<div class="ambient" aria-hidden="true"></div>
+
+<header class="hero">
+  <nav>
+    <span>Direction C: Depth</span>
+    <span><a href="#work">Work</a><a href="#contact">Contact</a></span>
+  </nav>
+  <div>
+    <h1 class="display">
+      <span class="l"><span class="w">Chase</span></span>
+      <span class="l"><span class="w">Vandiver</span></span>
+    </h1>
+    <div class="hero-foot glass">
+      <p>I build and ship software: apps, betting models and AI systems that my friends and family use every week.</p>
+      <span class="cue">Scroll <i></i></span>
+    </div>
+  </div>
+</header>
+
+<main id="work">
+  <section class="project mobile-vp" data-accent="#FF6A2B" style="--accent:#FF6A2B">
+    <h2 class="name display"><span class="w">The</span> <span class="w">CFB</span> <span class="w">Slate</span></h2>
+    <div class="stage">
+      <div class="halo"></div>
+      <div class="device mobile">
+        <div class="screen">
+          <video muted loop playsinline preload="none" hidden></video>
+          <span class="play"></span>
+          <span>Video placeholder</span>
+          <small>Phone clip, muted loop</small>
+        </div>
+      </div>
+    </div>
+    <div class="panels">
+      <div class="glass card l">
+        <span class="cat">Sports, mobile app</span>
+        <p class="blurb">Invite-only college football ratings, pick'em, and bet tracking for my friend group.</p>
+      </div>
+      <div class="glass card r">
+        <ul class="tags"><li class="tbd">Stack to be added</li></ul>
+        <a class="live" href="https://cfb-gameday.vercel.app">Open cfb-gameday.vercel.app</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="project cover" data-accent="#2FD18A" style="--accent:#2FD18A">
+    <h2 class="name display"><span class="w">Fairway</span> <span class="w">Picks</span></h2>
+    <div class="stage">
+      <div class="halo"></div>
+      <div class="device desktop">
+        <div class="screen">
+          <video muted loop playsinline preload="none" hidden></video>
+          <span class="play"></span>
+          <span>Video placeholder</span>
+          <small>Desktop clip, muted loop</small>
+        </div>
+      </div>
+    </div>
+    <div class="panels">
+      <div class="glass card l">
+        <span class="cat">Sports, web app</span>
+        <p class="blurb">Fantasy golf pick'em app.</p>
+      </div>
+      <div class="glass card r">
+        <ul class="tags"><li>Next.js</li><li>Supabase</li></ul>
+        <span class="soon">Live link coming soon</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="end" id="contact">
+  <p>End of mockup. Six more featured sections, the grid and contact follow in the real build.</p>
+</footer>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+function startLenis() {
+  const lenis = new Lenis();
+  window.lenis = lenis;
+  lenis.on("scroll", ScrollTrigger.update);
+  const raf = (t) => lenis.raf(t * 1000);
+  gsap.ticker.add(raf);
+  gsap.ticker.lagSmoothing(0);
+  return () => { gsap.ticker.remove(raf); lenis.destroy(); window.lenis = null; };
+}
+
+document.fonts.ready.then(() => {
+  const mm = gsap.matchMedia();
+  mm.add({
+    desktop: "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+    mobile: "(max-width: 767.98px) and (prefers-reduced-motion: no-preference)",
+  }, (ctx) => {
+    const { desktop } = ctx.conditions;
+    const stopLenis = startLenis();
+    const sections = gsap.utils.toArray(".project");
+    const ambient = document.querySelector(".ambient");
+
+    gsap.from(".hero .w", { y: 60, autoAlpha: 0, duration: 1.1, stagger: 0.1, ease: "power3.out" });
+    gsap.from(".hero-foot", { y: 30, autoAlpha: 0, duration: 0.9, delay: 0.35, ease: "power3.out" });
+
+    // The light moves behind the device and takes each project's colour as it arrives.
+    // Called per section, just before that section's own triggers, so everything refreshes in page order.
+    let prev = "#46507a";
+    const light = (sec, i) => {
+      const st = { trigger: sec, start: "top bottom", end: "top top", scrub: true };
+      gsap.fromTo(ambient, { backgroundColor: prev }, { backgroundColor: sec.dataset.accent, ease: "none", immediateRender: false, scrollTrigger: st });
+      if (i === 0) gsap.to(ambient, { x: 0, y: 0, opacity: 0.42, ease: "none", scrollTrigger: { ...st } });
+      prev = sec.dataset.accent;
+    };
+
+    if (desktop) {
+      document.documentElement.classList.add("pinned");
+
+      sections.forEach((sec, i) => {
+        light(sec, i);
+        const q = gsap.utils.selector(sec);
+        gsap.timeline({
+          defaults: { ease: "none" },
+          scrollTrigger: { trigger: sec, start: "top top", end: "+=260%", pin: true, scrub: 0.7 },
+        })
+          // Arrive: device swings up out of depth and settles flat.
+          .from(q(".name .w"), { y: 90, autoAlpha: 0, duration: 1.3, stagger: 0.14, ease: "power3.out" }, 0)
+          .from(q(".halo"), { autoAlpha: 0, scale: 0.6, duration: 2.6, ease: "power2.out" }, 0.2)
+          .from(q(".device"), { rotationX: 58, rotationY: -20, rotationZ: 7, z: -700, yPercent: 55, duration: 3.2, ease: "power3.out" }, 0.2)
+          .from(q(".device"), { autoAlpha: 0, duration: 0.9 }, 0.2)
+          .from(q(".card.l"), { x: -70, y: 110, autoAlpha: 0, duration: 1.5, ease: "power3.out" }, 2.1)
+          .from(q(".card.r"), { x: 90, y: 190, autoAlpha: 0, duration: 1.8, ease: "power3.out" }, 2.3)
+          // Hold, with the layers still drifting at different rates.
+          .addLabel("hold", 4.1)
+          .to(q(".card.l"), { y: -24, duration: 2.6 }, "hold")
+          .to(q(".card.r"), { y: -64, duration: 2.6 }, "hold")
+          .to(q(".name"), { y: -18, duration: 2.6 }, "hold")
+          // Leave: device recedes and dims while the light changes colour.
+          .addLabel("out", 6.7)
+          .to(q(".device"), { z: -620, rotationX: -22, yPercent: -18, autoAlpha: 0, duration: 1.5, ease: "power2.in" }, "out")
+          .to(q(".card"), { autoAlpha: 0, y: "-=60", duration: 0.9, stagger: 0.1, ease: "power2.in" }, "out")
+          .to(q(".name .w"), { autoAlpha: 0, y: -50, duration: 0.9, stagger: 0.06, ease: "power2.in" }, "out+=0.3")
+          .to(q(".halo"), { autoAlpha: 0, duration: 1.3 }, "out+=0.2");
+      });
+    } else {
+      sections.forEach((sec, i) => {
+        light(sec, i);
+        const q = gsap.utils.selector(sec);
+        gsap.from(q(".name .w"), { y: 40, autoAlpha: 0, duration: 0.8, stagger: 0.08, ease: "power3.out",
+          scrollTrigger: { trigger: sec, start: "top 75%", once: true } });
+        gsap.timeline({ scrollTrigger: { trigger: q(".stage")[0], start: "top 80%", once: true } })
+          .from(q(".halo"), { autoAlpha: 0, scale: 0.7, duration: 1.2, ease: "power2.out" })
+          .from(q(".device"), { rotationX: 24, y: 60, autoAlpha: 0, duration: 1.1, ease: "power3.out" }, 0);
+        gsap.from(q(".card"), { y: 40, autoAlpha: 0, duration: 0.7, stagger: 0.1, ease: "power3.out",
+          scrollTrigger: { trigger: q(".panels")[0], start: "top 85%", once: true } });
+      });
+    }
+
+    return () => { document.documentElement.classList.remove("pinned"); stopLenis(); };
+  });
+});
+</script>
+</body>
+</html>
