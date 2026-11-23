@@ -1,30 +1,19 @@
-import { featured, grid } from "@/lib/projects";
+import FeaturedProjects from "@/components/FeaturedProjects";
+import Hero from "@/components/Hero";
+import SmoothScroll from "@/components/SmoothScroll";
+import { featured } from "@/lib/projects";
 
-const directions = [
-  { href: "/design/direction-a.html", name: "A: Launch" },
-  { href: "/design/direction-b.html", name: "B: Precision" },
-  { href: "/design/direction-c.html", name: "C: Depth" },
-];
-
-// Interim page. The real site is built once a design direction is picked.
 export default function Home() {
   return (
-    <main className="mx-auto flex min-h-screen max-w-2xl flex-col justify-center gap-8 p-8">
-      <h1 className="text-4xl font-semibold tracking-tight">Chase Vandiver</h1>
-      <p className="text-neutral-400">
-        Design directions for the portfolio. {featured.length} featured
-        projects and {grid.length} smaller builds are seeded in
-        data/projects.json.
-      </p>
-      <ul className="flex flex-col gap-3 text-xl">
-        {directions.map((d) => (
-          <li key={d.href}>
-            <a className="underline underline-offset-4" href={d.href}>
-              {d.name}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </main>
+    <SmoothScroll>
+      <Hero />
+      <main>
+        {/* First two featured projects for now. The rest, the grid and contact come next. */}
+        <FeaturedProjects projects={featured.slice(0, 2)} />
+      </main>
+      <footer className="end">
+        <p>Six more projects, the grid of smaller builds and contact are coming next.</p>
+      </footer>
+    </SmoothScroll>
   );
 }
