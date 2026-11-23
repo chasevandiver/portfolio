@@ -162,6 +162,16 @@ export default function FeaturedProjects({ projects }: { projects: Project[] }) 
             });
           }
 
+          // Past the last project the light fades back to neutral for the rest of the page.
+          gsap.fromTo(
+            ambient,
+            { backgroundColor: prev },
+            {
+              backgroundColor: HERO_LIGHT, opacity: 0.26, ease: "none", immediateRender: false,
+              scrollTrigger: { trigger: ".work-end", start: "top bottom", end: "top top", scrub: true },
+            },
+          );
+
           return () => el.classList.remove("pinned");
         },
       );
@@ -175,6 +185,7 @@ export default function FeaturedProjects({ projects }: { projects: Project[] }) 
       {projects.map((project, i) => (
         <ProjectSection key={project.slug} project={project} cover={i > 0} />
       ))}
+      <div className="work-end" />
     </div>
   );
 }

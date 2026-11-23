@@ -122,3 +122,30 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
   .pinned .project.cover { margin-top: -100vh; }
 }
 @media (prefers-reduced-motion: reduce) { .cue i::after { animation: none; } }
+
+/* Hero nav */
+.hero { justify-content: space-between; }
+.hero nav { display: flex; justify-content: flex-end; gap: 2em; font-weight: 400; }
+.hero nav a { text-decoration: none; }
+.hero nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* Smaller builds: an index list */
+.builds, .contact { position: relative; z-index: 1; padding: 22vh var(--pad) 10vh; }
+.builds h2, .contact h2 { font-size: clamp(3rem, 9vw, 9rem); margin-left: -0.04em; margin-bottom: 6vh; }
+.builds ul { list-style: none; border-top: 1px solid rgba(255,255,255,.14); }
+.build > * {
+  display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 0.3rem 2rem;
+  padding: 1.5rem 0.4rem; border-bottom: 1px solid rgba(255,255,255,.14); text-decoration: none;
+  transition: background-color .2s, padding .2s;
+}
+.build > a:hover { background: rgba(255,255,255,.06); padding-left: 1.2rem; padding-right: 1.2rem; }
+.b-name { font-size: clamp(1.5rem, 3.2vw, 3rem); font-weight: 500; letter-spacing: -0.03em; line-height: 1.1; }
+.b-cat { color: var(--mute); white-space: nowrap; }
+.b-blurb { grid-column: 1; grid-row: 2; color: var(--mute); max-width: 60ch; }
+
+/* Contact */
+.contact { min-height: 90svh; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: var(--pad); }
+.contact-card { padding: 1.8rem 2rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.4rem 2rem; }
+.contact-card p { max-width: 44ch; font-size: clamp(1.1rem, 1.45vw, 1.5rem); line-height: 1.4; }
+.contact-card ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0.8rem; }
+.contact .live { --accent: var(--ink); }

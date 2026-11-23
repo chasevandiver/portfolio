@@ -22,6 +22,11 @@ export default function Hero() {
 
   return (
     <header className="hero" ref={root}>
+      <nav>
+        <a href="#work">Work</a>
+        <a href="#builds">Smaller builds</a>
+        <a href="#contact">Contact</a>
+      </nav>
       <h1 className="display">
         <span className="l">
           <span className="w">Chase</span>

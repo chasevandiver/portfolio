@@ -12,7 +12,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
   useGSAP(() => {
     const mm = gsap.matchMedia();
     mm.add("(prefers-reduced-motion: no-preference)", () => {
-      const lenis = new Lenis();
+      const lenis = new Lenis({ anchors: true });
       lenis.on("scroll", ScrollTrigger.update);
       const raf = (time: number) => lenis.raf(time * 1000);
       gsap.ticker.add(raf);
