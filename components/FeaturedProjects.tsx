@@ -77,6 +77,17 @@ function ProjectSection({ project, cover }: { project: Project; cover: boolean }
  */
 export default function FeaturedProjects({ projects }: { projects: Project[] }) {
   const root = useRef<HTMLDivElement>(null);
+  const triggers = useRef<ScrollTrigger[]>([]);
+
+  // Jump to the point in a project's pinned scroll where its content has arrived.
+  const goTo = (i: number) => {
+    const st = triggers.current[i];
+    if (!st) return;
+    const top = st.start + (st.end - st.start) * 0.42;
+    const lenis = (window as unknown as { __lenis?: { scrollTo: (y: number) => void } }).__lenis;
+    if (lenis) lenis.scrollTo(top);
+    else window.scrollTo(0, top);
+  };
 
   useGSAP(
     () => {
@@ -111,14 +122,20 @@ export default function FeaturedProjects({ projects }: { projects: Project[] }) 
 
           if (desktop) {
             el.classList.add("pinned");
+            const dots = gsap.utils.toArray<HTMLElement>(".rail button", el);
 
             sections.forEach((sec, i) => {
               light(sec, i);
               const q = gsap.utils.selector(sec);
-              gsap
+              const device = q(".device")[0] as HTMLElement;
+              const dot = dots[i];
+              const tl = gsap
                 .timeline({
                   defaults: { ease: "none" },
-                  scrollTrigger: { trigger: sec, start: "top top", end: "+=260%", pin: true, scrub: 0.7 },
+                  scrollTrigger: {
+                    trigger: sec, start: "top top", end: "+=320%", pin: true, scrub: 0.7, invalidateOnRefresh: true,
+                    onToggle: (self) => dot?.classList.toggle("active", self.isActive),
+                  },
                 })
                 // Arrive: device swings up out of depth and settles flat.
                 .from(q(".name .w"), { y: 90, autoAlpha: 0, duration: 1.3, stagger: 0.14, ease: "power3.out" }, 0)
@@ -131,17 +148,38 @@ export default function FeaturedProjects({ projects }: { projects: Project[] }) 
                 .from(q(".device"), { autoAlpha: 0, duration: 0.9 }, 0.2)
                 .from(q(".card.l"), { x: -70, y: 110, autoAlpha: 0, duration: 1.5, ease: "power3.out" }, 2.1)
                 .from(q(".card.r"), { x: 90, y: 190, autoAlpha: 0, duration: 1.8, ease: "power3.out" }, 2.3)
-                // Hold, with the layers still drifting at different rates.
+                // Read: the panels keep drifting at different rates.
                 .addLabel("hold", 4.1)
-                .to(q(".card.l"), { y: -24, duration: 2.6 }, "hold")
-                .to(q(".card.r"), { y: -64, duration: 2.6 }, "hold")
-                .to(q(".name"), { y: -18, duration: 2.6 }, "hold")
+                .to(q(".card.l"), { y: -16, duration: 1.2 }, "hold")
+                .to(q(".card.r"), { y: -40, duration: 1.2 }, "hold")
+                // Focus: the panels step aside and the video takes the screen.
+                .addLabel("focus", 5.3)
+                .to(q(".card.l"), { x: -120, autoAlpha: 0, duration: 1, ease: "power2.in" }, "focus")
+                .to(q(".card.r"), { x: 120, autoAlpha: 0, duration: 1, ease: "power2.in" }, "focus")
+                .to(q(".name"), { autoAlpha: 0.14, y: -40, duration: 1.2, ease: "power2.inOut" }, "focus")
+                .to(
+                  device,
+                  {
+                    scale: () => Math.min(1.5, (innerHeight * 0.86) / device.offsetHeight, (innerWidth * 0.88) / device.offsetWidth),
+                    y: () => -parseFloat(getComputedStyle(device).marginTop) / 2,
+                    duration: 1.6,
+                    ease: "power3.inOut",
+                  },
+                  "focus+=0.1",
+                )
+                .to(q(".halo"), { scale: 1.3, duration: 1.6, ease: "power3.inOut" }, "focus+=0.1")
+                .to({}, { duration: 1.4 })
                 // Leave: device recedes and dims while the light changes colour.
-                .addLabel("out", 6.7)
-                .to(q(".device"), { z: -620, rotationX: -22, yPercent: -18, autoAlpha: 0, duration: 1.5, ease: "power2.in" }, "out")
-                .to(q(".card"), { autoAlpha: 0, y: "-=60", duration: 0.9, stagger: 0.1, ease: "power2.in" }, "out")
-                .to(q(".name .w"), { autoAlpha: 0, y: -50, duration: 0.9, stagger: 0.06, ease: "power2.in" }, "out+=0.3")
+                .addLabel("out")
+                .to(device, { z: -620, rotationX: -22, yPercent: -18, autoAlpha: 0, duration: 1.5, ease: "power2.in" }, "out")
+                .to(q(".name"), { autoAlpha: 0, duration: 0.8 }, "out")
                 .to(q(".halo"), { autoAlpha: 0, duration: 1.3 }, "out+=0.2");
+              triggers.current[i] = tl.scrollTrigger!;
+            });
+            // Created after the pins so its range includes their spacing.
+            ScrollTrigger.create({
+              trigger: el, start: "top 40%", end: "bottom 60%",
+              toggleClass: { targets: ".rail", className: "on" },
             });
           } else {
             sections.forEach((sec, i) => {
@@ -182,6 +220,18 @@ export default function FeaturedProjects({ projects }: { projects: Project[] }) 
   return (
     <div ref={root} id="work">
       <div className="ambient" aria-hidden="true" />
+      <nav className="rail" aria-label="Featured projects">
+        {projects.map((project, i) => (
+          <button
+            key={project.slug}
+            type="button"
+            onClick={() => goTo(i)}
+            style={{ "--accent": project.accent } as React.CSSProperties}
+          >
+            <span>{project.name}</span>
+          </button>
+        ))}
+      </nav>
       {projects.map((project, i) => (
         <ProjectSection key={project.slug} project={project} cover={i > 0} />
       ))}

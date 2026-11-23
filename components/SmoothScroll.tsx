@@ -13,6 +13,8 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     const mm = gsap.matchMedia();
     mm.add("(prefers-reduced-motion: no-preference)", () => {
       const lenis = new Lenis({ anchors: true });
+      const w = window as unknown as { __lenis?: Lenis };
+      w.__lenis = lenis;
       lenis.on("scroll", ScrollTrigger.update);
       const raf = (time: number) => lenis.raf(time * 1000);
       gsap.ticker.add(raf);
@@ -20,6 +22,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       return () => {
         gsap.ticker.remove(raf);
         lenis.destroy();
+        delete w.__lenis;
       };
     });
     // Web fonts change text heights, which moves trigger positions.

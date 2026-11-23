@@ -149,3 +149,22 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
 .contact-card p { max-width: 44ch; font-size: clamp(1.1rem, 1.45vw, 1.5rem); line-height: 1.4; }
 .contact-card ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0.8rem; }
 .contact .live { --accent: var(--ink); }
+
+/* Project rail: where you are in the featured work. Desktop with motion only. */
+.rail { display: none; }
+.pinned .rail {
+  display: flex; flex-direction: column; align-items: flex-end; gap: 2px;
+  position: fixed; right: 1.4vw; top: 50%; transform: translateY(-50%); z-index: 5;
+  opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.pinned .rail.on { opacity: 1; pointer-events: auto; }
+.rail button {
+  display: flex; align-items: center; gap: 0.7em; padding: 7px 0; background: none; border: 0; cursor: pointer;
+  color: var(--ink); font: inherit; font-size: 0.85rem;
+}
+.rail button::after { content: ""; width: 14px; height: 2px; border-radius: 2px; background: rgba(255,255,255,.3); transition: width .25s, background-color .25s; }
+.rail button span { opacity: 0; transform: translateX(6px); transition: opacity .2s, transform .2s; white-space: nowrap; }
+.rail button:hover span, .rail button:focus-visible span, .rail button.active span { opacity: 1; transform: none; }
+.rail button:hover::after { background: var(--ink); }
+.rail button.active::after { width: 30px; background: var(--accent); }
+.rail button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
