@@ -4,14 +4,23 @@
     "name": "The CFB Slate",
     "blurb": "Invite-only college football ratings, pick'em, and bet tracking for my friend group.",
     "category": "Sports",
-    "stack": [],
+    "stack": [
+      "Next.js",
+      "TypeScript",
+      "Supabase",
+      "Tailwind"
+    ],
     "url": "https://cfb-gameday.vercel.app",
     "video": "/video/the-cfb-slate.mp4",
     "poster": "/posters/the-cfb-slate.jpg",
     "accent": "#FF6A2B",
     "featured": true,
     "viewport": "mobile",
-    "highlights": []
+    "highlights": [
+      "Elo-style ratings with separate offense and defense, tempo and team-specific home field",
+      "Picks stay hidden until kickoff and the bet ledger is append-only, enforced in the database",
+      "A Receipts page grades every flagged edge against the closing line"
+    ]
   },
   {
     "slug": "fairway-picks",
@@ -20,6 +29,7 @@
     "category": "Sports",
     "stack": [
       "Next.js",
+      "TypeScript",
       "Supabase"
     ],
     "url": "https://fairway-picks-one.vercel.app",
@@ -28,7 +38,11 @@
     "accent": "#2FD18A",
     "featured": true,
     "viewport": "desktop",
-    "highlights": []
+    "highlights": [
+      "Live leaderboard from ESPN with a projected cut line and head-to-head margins",
+      "Snake draft that updates in real time across devices",
+      "Money tracked automatically from finalized results"
+    ]
   },
   {
     "slug": "courtside-edge",
@@ -37,7 +51,9 @@
     "category": "Sports",
     "stack": [
       "Python",
-      "React"
+      "React",
+      "Vite",
+      "GitHub Actions"
     ],
     "url": "https://cbbmodel.vercel.app",
     "video": "/video/courtside-edge.mp4",
@@ -45,84 +61,138 @@
     "accent": "#F5B83D",
     "featured": true,
     "viewport": "desktop",
-    "highlights": []
+    "highlights": [
+      "Efficiency and tempo model, with home court fitted per team from four seasons of games",
+      "Lines are snapshotted through the day to measure closing line value",
+      "Picks, grading and results all run on scheduled jobs, with no database"
+    ]
   },
   {
     "slug": "jarvis",
     "name": "Jarvis",
     "blurb": "Home AI system running on a Linux box. Voice notes, smart home control, family dashboard.",
     "category": "Home",
-    "stack": [],
+    "stack": [
+      "Python",
+      "JavaScript",
+      "Home Assistant",
+      "Claude"
+    ],
     "url": "https://jarvis-daily-seven.vercel.app",
     "video": "/video/jarvis.mp4",
     "poster": "/posters/jarvis.jpg",
     "accent": "#4CC9F0",
     "featured": true,
     "viewport": "desktop",
-    "highlights": []
+    "highlights": [
+      "Plain-English room commands, run through Home Assistant",
+      "Web Push implemented by hand, with no push library",
+      "Overnight research jobs run by headless Claude"
+    ]
   },
   {
     "slug": "chase-city",
     "name": "Chase City",
     "blurb": "Pixel-art town where each running Claude Code agent is a worker in a building.",
     "category": "AI",
-    "stack": [],
+    "stack": [
+      "Node.js",
+      "Phaser 3",
+      "WebSockets",
+      "Blender"
+    ],
     "url": "https://chase-city-demo.vercel.app",
     "video": "/video/chase-city.mp4",
     "poster": "/posters/chase-city.jpg",
     "accent": "#B28DFF",
     "featured": true,
     "viewport": "desktop",
-    "highlights": []
+    "highlights": [
+      "Claude Code hooks report each event; the session's folder decides which building",
+      "Reads send a worker to the library, edits show construction, tests bring an inspector",
+      "Day and night follow the real sun, with live weather"
+    ]
   },
   {
     "slug": "tv-overlay",
     "name": "TV Overlay",
     "blurb": "Android app that draws live scores and my bets over whatever is on the Fire TV.",
     "category": "Sports",
-    "stack": [],
+    "stack": [
+      "Kotlin",
+      "Android",
+      "Fire OS",
+      "GitHub Actions"
+    ],
     "url": "",
     "video": "",
     "poster": "",
     "accent": "#FF3D71",
     "featured": true,
     "viewport": "desktop",
-    "highlights": []
+    "highlights": [
+      "A foreground service draws a web view over whatever is on screen",
+      "Controlled from a phone, through a page the TV app serves itself",
+      "Sideloaded, starts on boot and updates itself from CI builds"
+    ]
   },
   {
     "slug": "floorory",
     "name": "FlooRory",
     "blurb": "Projector floor game I built for my daughter.",
     "category": "Family",
-    "stack": [],
+    "stack": [
+      "TypeScript",
+      "three.js",
+      "Vite",
+      "WebSockets"
+    ],
     "url": "https://floorory.vercel.app",
     "video": "/video/floorory.mp4",
     "poster": "/posters/floorory.jpg",
     "accent": "#FFD84D",
     "featured": true,
     "viewport": "desktop",
-    "highlights": []
+    "highlights": [
+      "Webcam motion tracking that ignores the projector's own picture",
+      "Calibrates itself by projecting a grid of dots and solving the camera-to-floor mapping",
+      "Phone remote, a 15-minute timer and a gentle wind-down"
+    ]
   },
   {
     "slug": "orion",
     "name": "ORION",
     "blurb": "AI marketing operating system for small businesses.",
     "category": "AI",
-    "stack": [],
+    "stack": [
+      "Next.js",
+      "Express",
+      "Postgres",
+      "Claude",
+      "Inngest"
+    ],
     "url": "https://orion-api-weld.vercel.app",
     "video": "/video/orion.mp4",
     "poster": "/posters/orion.jpg",
     "accent": "#5B7CFF",
     "featured": true,
     "viewport": "desktop",
-    "highlights": []
+    "highlights": [
+      "14 specialised agents covering strategy, copy, SEO, ads, lead scoring and more",
+      "Six-stage pipeline with human approval before anything publishes",
+      "Pre-flight checks for brand safety, character limits and spam signals"
+    ]
   },
   {
     "slug": "christies-golf-ranch",
     "name": "Christie's Golf Ranch",
-    "blurb": "TODO",
+    "blurb": "Marketing site, admin CMS and social posting engine for a driving range.",
     "category": "Client work",
-    "stack": [],
+    "stack": [
+      "Next.js",
+      "Supabase",
+      "Resend"
+    ],
     "url": "https://christies-golf-ranch.vercel.app",
     "video": "",
     "poster": "",
@@ -134,9 +204,13 @@
   {
     "slug": "chase-os",
     "name": "Chase OS",
-    "blurb": "TODO",
+    "blurb": "Personal command center on top of Notion, built for the iPad.",
     "category": "Home",
-    "stack": [],
+    "stack": [
+      "Next.js",
+      "Notion API",
+      "Tailwind"
+    ],
     "url": "",
     "video": "",
     "poster": "",
@@ -148,9 +222,12 @@
   {
     "slug": "golf-oracle",
     "name": "golf-oracle",
-    "blurb": "TODO",
+    "blurb": "PGA Tour predictor that simulates each tournament 50,000 times for win, top-10 and cut odds.",
     "category": "Sports",
-    "stack": [],
+    "stack": [
+      "Python",
+      "React"
+    ],
     "url": "https://golf-oracle-chi.vercel.app",
     "video": "",
     "poster": "",
@@ -162,9 +239,13 @@
   {
     "slug": "fantasybaseballkeepers",
     "name": "fantasybaseballkeepers",
-    "blurb": "TODO",
+    "blurb": "Keeper picker for my fantasy baseball league, with the league's service-time and franchise-tag rules built in.",
     "category": "Sports",
-    "stack": [],
+    "stack": [
+      "React",
+      "Vite",
+      "Supabase"
+    ],
     "url": "",
     "video": "",
     "poster": "",
@@ -176,9 +257,12 @@
   {
     "slug": "fantraxapi",
     "name": "fantraxapi",
-    "blurb": "TODO",
+    "blurb": "Fantasy baseball war room that pulls league data from Fantrax and asks Claude for draft advice.",
     "category": "Sports",
-    "stack": [],
+    "stack": [
+      "Next.js",
+      "Claude"
+    ],
     "url": "",
     "video": "",
     "poster": "",
@@ -190,9 +274,13 @@
   {
     "slug": "kitchen-homebase",
     "name": "kitchen-homebase",
-    "blurb": "TODO",
+    "blurb": "Kitchen wall display with weather, calendar, photos and what's playing.",
     "category": "Home",
-    "stack": [],
+    "stack": [
+      "JavaScript",
+      "Firebase",
+      "Vercel Functions"
+    ],
     "url": "",
     "video": "",
     "poster": "",
@@ -204,9 +292,13 @@
   {
     "slug": "kidbook-creator",
     "name": "kidbook-creator",
-    "blurb": "TODO",
+    "blurb": "Picture-book editor that exports print-ready PDFs for Amazon KDP.",
     "category": "Family",
-    "stack": [],
+    "stack": [
+      "React",
+      "Supabase",
+      "jsPDF"
+    ],
     "url": "",
     "video": "",
     "poster": "",
@@ -218,9 +310,13 @@
   {
     "slug": "wilderwhim-woods",
     "name": "wilderwhim-woods",
-    "blurb": "TODO",
+    "blurb": "Site for the children's book Barry Is Terrific, with printable activities and a seek-and-find game.",
     "category": "Client work",
-    "stack": [],
+    "stack": [
+      "HTML",
+      "CSS",
+      "JavaScript"
+    ],
     "url": "https://wilderwhimwoods.com",
     "video": "",
     "poster": "",
@@ -232,9 +328,13 @@
   {
     "slug": "website-redesign-business",
     "name": "Website redesign business",
-    "blurb": "TODO",
+    "blurb": "Config-driven website templates for local small businesses. Early stage.",
     "category": "Client work",
-    "stack": [],
+    "stack": [
+      "HTML",
+      "CSS",
+      "JavaScript"
+    ],
     "url": "",
     "video": "",
     "poster": "",

@@ -115,7 +115,7 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
   .device.desktop { width: 54vw; margin-top: 18vh; }
   .panels { display: block; position: absolute; inset: 0; z-index: 3; pointer-events: none; }
   .glass.card { position: absolute; pointer-events: auto; }
-  .card.l { left: 6vw; bottom: 11vh; width: 23vw; }
+  .card.l { left: 5vw; bottom: 8vh; width: 24vw; }
   .card.r { right: 6vw; top: 47vh; width: 20vw; }
   .mobile-vp .card.l { left: 15vw; }
   .mobile-vp .card.r { right: 17vw; }
